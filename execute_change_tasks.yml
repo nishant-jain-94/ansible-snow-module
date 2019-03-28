@@ -1,0 +1,12 @@
+---
+- name: Change creation process begins
+  hosts: localhost
+  gather_facts: no
+  vars:
+    contents: "{{ lookup('file', 'Server_Inventory_hosts.yml')| string | from_yaml }}"
+  tasks:
+    - debug:
+        msg: "{{contents.serverinventory[0].Category}}"
+    - include_tasks: change_task.yaml
+      with_items: 
+        - "{{contents.serverinventory}}"
